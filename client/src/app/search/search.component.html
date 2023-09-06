@@ -1,0 +1,30 @@
+<form #searchForm="ngForm" id="searchForm" (ngSubmit)="getSummoner(searchForm.value.username)">
+    <input type="search" class="form me-sm-2" name="username" placeholder="Summoner Name..." ngModel #usernameInput="ngModel">
+    <button class="btn btn-primary" type="submit" form="searchForm">Search</button>
+</form>
+
+<div *ngIf="summoner">
+    <h1>Summoner Name = {{summoner.name}}</h1>
+    <h1 *ngFor="let champ of mastery.slice(0,1)">{{champion}} Mastery Points = {{champ.championPoints}}</h1>
+    <div>
+        <button class="btn btn-primary" (click)="getMatches(summoner.puuId)">Get Matches</button>
+        
+        <div *ngFor="let match of matchesList; let j = index">
+            <div *ngIf="match">
+                <h1 *ngFor="let player of match.metaData.participants; let i = index">
+                    <ng-container *ngIf="player === summoner.puuId">
+                        <h1 [style.color]="match.info.participants[i].win === true ? 'green' : 'red'" >
+                            {{match.info.participants[i].championName}} : {{match.info.participants[i].kills}} / {{match.info.participants[i].deaths}} / {{match.info.participants[i].assists}}
+                        </h1>
+                    </ng-container>
+                    
+                </h1>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+
+
